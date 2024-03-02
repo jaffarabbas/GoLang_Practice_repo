@@ -47,6 +47,3 @@ func caluculater() {
 		fmt.Println(multiply(inputTaker(), inputTaker()))
 	}
 }
-func main() {
-	caluculater()
-}

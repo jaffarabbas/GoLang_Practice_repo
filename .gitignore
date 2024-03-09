@@ -45,3 +45,6 @@
 *.swo
 *.swn
 *.swm
+
+*.exe
+.env

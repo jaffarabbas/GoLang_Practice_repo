@@ -8,6 +8,15 @@ import (
 	"gorm.io/gorm"
 )
 
+func (r *Repository) CreatBooks(c *fiber.Ctx) error {
+	book := new(Book)
+	if err := c.BodyParser(book); err != nil {
+		return c.Status(400).SendString(err.Error())
+	}
+	r.DB.Create(&book)
+	return c.JSON(book)
+}
+
 type Book struct {
 	Author    string `json:"author"`
 	Title     string `json:"title"`
@@ -32,6 +41,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+	db, err := storage.NewConnection(config)
 	app := fiber.New()
 	r := Repository{
 		DB: db,

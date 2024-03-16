@@ -17,8 +17,13 @@ func main() {
 	mt := interfaces.MyTest{}
 
 	// Call the getTest method on the MyTest instance
-	result := mt.getTest()
+	result := getTest(mt)
 
 	// Print the result
 	fmt.Println(result) // Output: test
+}
+
+// Add the getTest method to the MyTest struct
+func (mt *interfaces.MyTest) getTest() string {
+	return "test"
 }

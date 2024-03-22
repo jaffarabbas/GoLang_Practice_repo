@@ -11,6 +11,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 type response struct {
@@ -24,7 +25,6 @@ func GetConnection() *sql.DB {
 	if err != nil {
 		log.Fatalf("Error loading .env file")
 	}
-	log.Printf("POSTGRES_URL: %v", os.Getenv("POSTGRE_URL"))
 	db, err := sql.Open("postgres", os.Getenv("POSTGRE_URL"))
 
 	if err != nil {

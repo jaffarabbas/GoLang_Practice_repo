@@ -8,5 +8,5 @@ import (
 
 func AuthRouter(router *gin.Engine) {
 	router.POST("users/register", controller.Register())
-	router.POST("user/login", controller.Login())
+	router.POST("users/login", controller.Login())
 }

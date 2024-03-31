@@ -9,7 +9,7 @@ import (
 type User struct {
 	ID           primitive.ObjectID `json:"id" bson:"_id"`
 	Username     *string            `json:"username" validate:"required" bson:"username"`
-	Email        *string            `json:"email" validate:"email, required" bson:"email"`
+	Email        *string            `json:"email" validate:"email,required" bson:"email"`
 	Password     *string            `json:"password" bson:"password"`
 	Token        *string            `json:"token" bson:"token"`
 	User_Type    *string            `json:"user_type" bson:"user_type"`

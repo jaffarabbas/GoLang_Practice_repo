@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"go-ecommerce-api-mssql/routes"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -15,9 +15,7 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Logger())
 
-	dbConnection, err := config.DBInstance()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer dbConnection.Close()
+	routes.ProductRouter(router)
+
+	router.Run(":" + port)
 }

@@ -1,28 +1,23 @@
 package config
 
 import (
-	"database/sql"
 	"log"
 	"os"
 
 	"github.com/joho/godotenv"
+	"gorm.io/driver/sqlserver"
+	"gorm.io/gorm"
 )
 
-func DBInstance() *sql.DB {
+func DBInstance() *gorm.DB {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 	DbUrl := os.Getenv("DATA_BASE_URL")
-	db, err := sql.Open("sqlserver", DbUrl)
+	db, err := gorm.Open(sqlserver.Open(DbUrl), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
 	}
-	return db
-}
-
-var db *sql.DB = DBInstance()
-
-func GetDB() *sql.DB {
 	return db
 }

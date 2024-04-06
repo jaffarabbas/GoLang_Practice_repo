@@ -2,7 +2,6 @@ package services
 
 import (
 	"go-ecommerce-api-mssql/config"
-	"log"
 
 	"go-ecommerce-api-mssql/models"
 
@@ -11,12 +10,12 @@ import (
 
 var db *gorm.DB = config.DBInstance()
 
-func GetAllProducts() []models.Product {
+func GetAllProducts() ([]models.Product, error) {
 	var products []models.Product
 	if err := db.Find(&products).Error; err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
-	return products
+	return products, nil
 }
 
 func GetProductById(id string) (*models.Product, *gorm.DB) {

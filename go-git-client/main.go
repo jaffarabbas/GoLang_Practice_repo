@@ -44,7 +44,7 @@ func main() {
 	// Print the status
 	fmt.Println("Repository status:")
 	printStatus(status)
-	gitCommitAndPush(dirpath, status, w, r)
+	gitCommitAndPush(selectedDirectory, status, w, r)
 }
 
 func gitCommitAndPush(path string, status git.Status, w *git.Worktree, r *git.Repository) {

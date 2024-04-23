@@ -3,9 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 	"time"
@@ -44,10 +44,10 @@ func main() {
 	// Print the status
 	fmt.Println("Repository status:")
 	printStatus(status)
-	gitCommitAndPush(status, w, r)
+	gitCommitAndPush(dirpath, status, w, r)
 }
 
-func gitCommitAndPush(status git.Status, w *git.Worktree, r *git.Repository) {
+func gitCommitAndPush(path string, status git.Status, w *git.Worktree, r *git.Repository) {
 	changedFiles := 0
 	for _, stat := range status {
 		if stat.Worktree != git.Unmodified {
@@ -66,7 +66,7 @@ func gitCommitAndPush(status git.Status, w *git.Worktree, r *git.Repository) {
 		log.Fatal("Error committing changes: ", err)
 	}
 
-	err = pushChanges(r)
+	err = pushChangesWithShell(path)
 	if err != nil {
 		log.Fatal("Error pushing changes: ", err)
 	}
@@ -75,7 +75,7 @@ func gitCommitAndPush(status git.Status, w *git.Worktree, r *git.Repository) {
 }
 
 func getDirectories(path string) []string {
-	files, err := ioutil.ReadDir(path)
+	files, err := os.ReadDir(path)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -170,4 +170,14 @@ func pushChanges(r *git.Repository) error {
 	return r.Push(&git.PushOptions{
 		Auth: auth,
 	})
+}
+
+func pushChangesWithShell(path string) error {
+	cmd := exec.Command("git", "push", "origin", "master")
+	cmd.Dir = path // Set the working directory for the command
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		return fmt.Errorf("error pushing changes: %v - %s", err, output)
+	}
+	return nil
 }

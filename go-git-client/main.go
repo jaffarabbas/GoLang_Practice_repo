@@ -173,6 +173,7 @@ func pushChanges(r *git.Repository) error {
 }
 
 func pushChangesWithShell(path string) error {
+	log.Println("Pushing changes", path)
 	cmd := exec.Command("git", "push", "origin", "master")
 	cmd.Dir = path // Set the working directory for the command
 	output, err := cmd.CombinedOutput()

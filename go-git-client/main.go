@@ -13,7 +13,6 @@ import (
 	git "github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
-	"gopkg.in/src-d/go-git.v4/plumbing/transport/http"
 )
 
 func main() {
@@ -44,10 +43,10 @@ func main() {
 	// Print the status
 	fmt.Println("Repository status:")
 	printStatus(status)
-	gitCommitAndPush(selectedDirectory, status, w, r)
+	gitCommitAndPush(selectedDirectory, status, w)
 }
 
-func gitCommitAndPush(path string, status git.Status, w *git.Worktree, r *git.Repository) {
+func gitCommitAndPush(path string, status git.Status, w *git.Worktree) {
 	changedFiles := 0
 	for _, stat := range status {
 		if stat.Worktree != git.Unmodified {
@@ -159,16 +158,6 @@ func commitChanges(w *git.Worktree, message string) (plumbing.Hash, error) {
 			Email: "",
 			When:  time.Now(),
 		},
-	})
-}
-
-func pushChanges(r *git.Repository) error {
-	auth := &http.BasicAuth{
-		Username: "", // this can be anything except an empty string
-		Password: "",
-	}
-	return r.Push(&git.PushOptions{
-		Auth: auth,
 	})
 }
 

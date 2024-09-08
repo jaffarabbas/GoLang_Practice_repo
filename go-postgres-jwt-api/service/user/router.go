@@ -1,6 +1,8 @@
 package user
 
 import (
+	"encoding/json"
+	"go-jwt-postgres-api/types"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -23,5 +25,9 @@ func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
+	if r.Body == nil {
 
+	}
+	var payload types.RegisterUserPayLoad
+	err := json.NewDecoder(r.Body).Decode(payload)
 }

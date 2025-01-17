@@ -67,3 +67,11 @@ func createFile(dirPath string) (string, error) {
 	defer file.Close()
 	return filePath, nil
 }
+
+func deleteFile(dirPath string) (string, error) {
+	err := os.RemoveAll(dirPath)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return "done", nil
+}
